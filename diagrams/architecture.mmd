@@ -1,0 +1,20 @@
+flowchart TD
+    U[User] --> UI[Streamlit UI Layer]
+
+    UI --> APP[Application Services]
+    APP --> QUIZ[Quiz Service]
+    APP --> GRAM[Grammar Service]
+    APP --> VOC[Vocabulary Service]
+    APP --> EXAM[Exam Service]
+    APP --> PROG[Progress Service]
+
+    QUIZ --> REPO[Repository Layer]
+    GRAM --> REPO
+    VOC --> REPO
+    EXAM --> REPO
+    PROG --> REPO
+
+    REPO --> DB[(SQLite Database)]
+
+    APP --> RULES[Rule and Feedback Engine]
+    APP --> SRS[Spaced Repetition Scheduler]

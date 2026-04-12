@@ -1,0 +1,32 @@
+sequenceDiagram
+    autonumber
+    participant U as User
+    participant UI as Streamlit UI
+    participant QS as Quiz Service
+    participant RS as Repository Layer
+    participant DB as SQLite
+    participant PS as Progress Service
+
+    U->>UI: Select level and quiz mode
+    UI->>QS: request_question(level)
+    QS->>RS: fetch_quiz_question(level)
+    RS->>DB: SELECT question by level and type
+    DB-->>RS: question row
+    RS-->>QS: Question DTO
+    QS-->>UI: Render prompt
+
+    U->>UI: Submit answer
+    UI->>QS: evaluate_answer(question_id, answer)
+    QS->>RS: fetch_answer_key(question_id)
+    RS->>DB: SELECT answer
+    DB-->>RS: answer key
+    RS-->>QS: Answer key
+    QS-->>UI: Result (correct or incorrect + explanation)
+
+    UI->>PS: record_attempt(user_id, question_id, is_correct)
+    PS->>RS: persist_attempt(...)
+    RS->>DB: INSERT attempt and update stats
+    DB-->>RS: success
+    RS-->>PS: success
+    PS-->>UI: updated streak and mastery score
+    UI-->>U: Feedback, score, next recommendation
