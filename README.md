@@ -125,6 +125,7 @@ Contributions are welcome. If you want to help, open an issue with:
 - Bug report
 - UX suggestion
 - Content quality improvement
+- Architectural Proposal
 
 ## License
 
